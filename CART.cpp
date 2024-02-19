@@ -1,6 +1,6 @@
 #include "CART.h"
 
-std::pair<std::vector<std::vector<std::string>>, std::vector<std::vector<std::string>>> partition(const std::vector<std::vector<std::string>>& rows, const Question& question) {
+std::pair<Array2D, Array2D> partition(const Array2D& rows, const Question& question) {
 	std::vector <std::vector<std::string>> true_rows, false_rows;
 
 	for (const auto& row : rows) {
@@ -14,7 +14,7 @@ std::pair<std::vector<std::vector<std::string>>, std::vector<std::vector<std::st
 	return { true_rows, false_rows };
 }
 
-double gini(const std::vector<std::vector<std::string>>& rows) {
+double gini(const Array2D& rows) {
 	std::unordered_map<std::string, int> counts = class_counts(rows);
 	double impurity = 1.0;
 	double prob_of_label;
@@ -28,12 +28,12 @@ double gini(const std::vector<std::vector<std::string>>& rows) {
 }
 
 
-double info_gain(const BigD& left, const BigD& right, double current_uncertainty) {
+double info_gain(const Array2D& left, const Array2D& right, double current_uncertainty) {
 	double p = static_cast<double>(left.size() / (left.size() + right.size()));
 	return current_uncertainty - p * gini(left) - (1 - p) * gini(right);
 }
 
-std::pair<double, Question> find_best_split(const std::vector<std::vector<std::string>>& rows) {
+std::pair<double, Question> find_best_split(const Array2D& rows) {
 	double best_gain = 0.0;
 	Question best_question(0, "");
 	double current_uncertainty = gini(rows);

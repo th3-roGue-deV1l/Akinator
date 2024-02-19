@@ -35,7 +35,7 @@ public:
 
 class Node {
 public:
-	virtual ~Node() {}
+	virtual ~Node() { }
 };
 
 
@@ -47,7 +47,7 @@ public:
 		return predictions;
 	}
 
-	Leaf(const std::vector<std::vector<std::string>>& rows) {
+	Leaf(const Array2D& rows) {
 		predictions = class_counts(rows);
 	}
 
@@ -65,6 +65,10 @@ public:
 		}
 		return cout;
 	}
+
+    ~Leaf() override {
+        delete this;
+    }
 };
 
 
@@ -86,5 +90,9 @@ public:
 	Node* getTrueBranch() { return true_branch; }
 
 	Node* getFalseBranch() { return false_branch; }
+
+    ~DecisionNode() override {
+        delete this;
+    }
 };
 

@@ -7,7 +7,7 @@
 #include "BinaryDecisionTree.h"
 #include "CART.h"
 
-std::vector<std::vector<std::string>> training_data = {
+Array2D training_data = {
 	{"Green", "3", "Apple"},
 	{"Yellow", "3", "Apple"},
 	{"Red", "1", "Grape"},
@@ -16,8 +16,10 @@ std::vector<std::vector<std::string>> training_data = {
 	{"Peach", "2", "Peach"}
 };
 
+Array2D CSVdata = CSV2Vector("something.csv");
 
-Node* build_tree(std::vector<std::vector<std::string>> rows) {
+
+Node* build_tree(const Array2D& rows) {
 	auto [gain, question] = find_best_split(rows);
 
 	if (gain == 0.0) {
@@ -32,10 +34,10 @@ Node* build_tree(std::vector<std::vector<std::string>> rows) {
 	return new DecisionNode(question, true_branch, false_branch);
 }
 
-void print_tree(Node* node, std::string spacing = "") {
+void print_tree(Node* node, const std::string& spacing = "") {
 	std::string answer;
 
-	Leaf* leaf = dynamic_cast<Leaf*>(node);
+	auto leaf = dynamic_cast<Leaf*>(node);
 	if (leaf) {
 		for (const auto& pair : leaf->getPredictions()) {
 			std::cout << "Is it " << pair.first << "? ";
@@ -46,10 +48,9 @@ void print_tree(Node* node, std::string spacing = "") {
 			}
 		}
 		std::cout << "Jaatha Jhuto Bolxas!!!" << std::endl;
-
 	}
 
-	DecisionNode* decisionNode = dynamic_cast<DecisionNode*>(node);
+	auto decisionNode = dynamic_cast<DecisionNode*>(node);
 	if (decisionNode) {
 		std::cout << spacing << decisionNode->getQuestion();
 		std::cin >> answer;
