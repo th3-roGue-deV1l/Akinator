@@ -7,14 +7,17 @@
 #include "BinaryDecisionTree.h"
 #include "CART.h"
 
-// Array2D training_data = {
-// 	{"Green", "3", "Apple"},
-// 	{"Yellow", "3", "Apple"},
-// 	{"Red", "1", "Grape"},
-// 	{"Red", "1", "Grape"},
-// 	{"Yellow", "3", "Lemon"},
-// 	{"Peach", "2", "Peach"}
-// };
+
+Array2D training_data = {
+	{"Green", "3", "Apple"},
+	{"Yellow", "3", "Apple"},
+	{"Red", "1", "Grape"},
+	{"Red", "1", "Grape"},
+	{"Yellow", "3", "Lemon"},
+	{"Peach", "2", "Peach"}
+};
+
+Array2D CSVdata = CSV2Vector("/Users/macbook/CLionProjects/Jaasus/database.csv");
 
 Node* build_tree(const Array2D& rows) {
 	auto [gain, question] = find_best_split(rows);
@@ -57,7 +60,7 @@ void print_tree(Node* node, const std::string& spacing = "") {
 			print_tree(decisionNode->getTrueBranch(), spacing + " ");
 		}
 		else {
-			std::cout << spacing << "--> False:";
+			std::cout << spacing << "--> False:" << std::endl;
 			print_tree(decisionNode->getFalseBranch(), spacing + " ");
 		}
 	}
@@ -66,14 +69,14 @@ void print_tree(Node* node, const std::string& spacing = "") {
 
 int main()
 {
-	try {
-		Array2D training_data = CSV2Vector("./fruits.csv");
-		Node* my_tree = build_tree(training_data);
-		print_tree(my_tree);
-	}
-	catch (std::exception e) {
-		std::cerr << e.what() << std::endl;
-	}
+
+    try {
+	    Node* my_tree = build_tree(CSVdata);
+	    print_tree(my_tree);
+    }
+    catch (const char& err) {
+        std::cout << err;
+    }
 
 	std::getchar();
 	std::getchar();

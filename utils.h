@@ -13,4 +13,4 @@ std::unordered_map<std::string, int> class_counts(const Array2D& rows);
 
 std::vector<std::string> unique_vals(const Array2D& rows, int col);
 
-std::vector<std::vector<std::string> > CSV2Vector(std::string file_name);
+std::vector<std::vector<std::string> > CSV2Vector (const char* file_name);
