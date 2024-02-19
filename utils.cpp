@@ -21,26 +21,23 @@ std::unordered_map<std::string, int> class_counts(const Array2D& rows) {
 	return counts;
 }
 
-std::vector<std::vector<std::string> > CSV2Vector (const char* file_name) {
-    std::ifstream filename;
-    filename.open(file_name);
-    if(!fopen(file_name, "r")) throw "FILE DOESN'T EXIST !!!";
+std::vector<std::vector<std::string> > CSV2Vector (std::string file_name) {
+    std::ifstream file(file_name);
+	
+	Array2D data;
+	std::string line;
+    
+    while (std::getline(file, line)) {
+		std::vector<std::string> row;
+		std::stringstream ss(line);
+		std::string item;
 
-    std::string name;
-    std::vector<std::string> line;
-    std::vector<std::vector<std::string> > data;
-    std::string item;
-
-    int i = 0;
-    while (!filename.eof()) {
-        filename >> name;
-        std::stringstream ss(name);
-
-        while (getline(ss, item, ',')) {
-            line.push_back(item);
-        }
-        data.push_back(line);
-        i++;
+		while (std::getline(ss, item, ','))
+		{
+			row.push_back(item);
+		}
+		data.push_back(row);
     }
+
     return data;
 }
