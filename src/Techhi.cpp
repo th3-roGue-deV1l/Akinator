@@ -9,7 +9,7 @@
 
 std::vector<std::string> header;
 long long totalDuration;
-Array2D CSVdata = CSV2Vector("D:/Projects/C++/DSA/Techhi/data/anime_traits_refined.csv");
+Array2D CSVdata = CSV2Vector("D:/Projects/C++/DSA/Techhi/data/anime_data_refined.csv");
 
 std::shared_ptr<Node> build_tree(Array2D& rows) {
 	auto [gain, question] = find_best_split(rows);
@@ -61,10 +61,12 @@ void print_tree(const std::shared_ptr<Node>& node, const std::string& spacing = 
 void display_tree(std::shared_ptr<Node> node, const std::string& prefix = "", bool isLeft = false) {
 	auto leaf = std::dynamic_pointer_cast<Leaf>(node);
 	if (leaf) {
+		std::cout << prefix;
+		std::cout << (isLeft ? "|--" : "+--");
 		for (auto& row : leaf->getPredictions()) {
 			std::cout << "{ " << row.first << ", " << row.second << " }\t";
 		}
-		std::cout << std::endl << std::endl;
+		std::cout << std::endl;
 	}
 
 	auto decisionNode = std::dynamic_pointer_cast<DecisionNode>(node);

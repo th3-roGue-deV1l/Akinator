@@ -1,5 +1,6 @@
 #include "CART.h"
 
+static tbb::mutex mutex;
 
 std::pair<Array2D, Array2D> partition(const Array2D& rows, const Question& question) {
 	std::vector <std::vector<std::string>> true_rows, false_rows;
@@ -65,10 +66,9 @@ struct LoopBody {
 
 				double gain = info_gain(true_rows, false_rows, current_uncertainty);
 
-				// Use a mutex to protect the shared variables
-				// Alternatively, you can use tbb::combinable or tbb::enumerable_thread_specific
-#pragma omp critical
+				
 				{
+					tbb::mutex::scoped_lock(mutex);
 					if (gain >= best_gain) {
 						best_gain = gain;
 						best_question = question;
