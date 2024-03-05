@@ -1,11 +1,14 @@
 #include "utils.h"
 #include "exception"
 
+
 std::vector<std::string> unique_vals(const Array2D& rows, int col) {
 	std::vector<std::string> unique;
+
 	for (const auto& row : rows) {
 		unique.push_back(row[col]);
 	}
+
 	return unique;
 }
 
@@ -40,5 +43,7 @@ std::vector<std::vector<std::string>> CSV2Vector (const char* file_name) {
         data.push_back(row);
     }
 
+	header = data.front();
+	data.erase(data.begin());
     return data;
 }

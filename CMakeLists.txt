@@ -11,8 +11,15 @@ endif()
 
 project ("Techhi")
 
+find_package(TBB REQUIRED)
+
+add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+
 # Add source to this project's executable.
-add_executable (Techhi "Techhi.cpp" "Techhi.h"      "BinaryDecisionTree.h" "utils.h" "utils.cpp" "CART.h" "CART.cpp")
+add_executable (Techhi "./src/Techhi.cpp" "./src/Techhi.h" "./src/BinaryDecisionTree.h" "./src/utils.h" "./src/utils.cpp" "./src/CART.h" "./src/CART.cpp")
+
+target_link_libraries(Techhi TBB::tbb)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Techhi PROPERTY CXX_STANDARD 20)

@@ -10,7 +10,6 @@
 
 class Question {
 private:
-	std::vector<std::string> header = { "Color", "Diameter", "Label" };
 	int column;
 	std::string value;
 public:
@@ -19,15 +18,12 @@ public:
 	bool match(std::vector<std::string> example) const {
 		std::string val = example[column];
 
-		if (column == 1) {
-			return std::stoi(val) >= std::stoi(value);
-		}
 		return val == value;
 	}
 
 	friend std::ostream& operator<<(std::ostream& cout, const Question& q) {
-		std::string operand = (q.column == 1) ? " >= " : " = ";
-		cout << "Is " << q.header[q.column] << operand << q.value << " ?";
+		std::string operand = (q.column == 100) ? " >= " : " = ";
+		cout << "Is " << header[q.column] << operand << q.value << " ?";
 		return cout;
 	}
 };
@@ -54,32 +50,28 @@ public:
 	friend std::ostream& operator<<(std::ostream& cout, const Leaf& leaf) {
 		std::string answer;
 		for (auto& row : leaf.predictions) {
-			cout << "Is it: " << row.first << " ? ";
+			/*cout << "Is it: " << row.first << " ? ";
 			std::cin >> answer;
 			if (answer == "y") {
 				std::cout << "I own you bitch!" << std::endl;
 				break;
 			}
-			continue;
-			//cout << "{ " << row.first << ", " << row.second << " }\n";
+			continue;*/
+			cout << "{ " << row.first << ", " << row.second << " }\t";
 		}
 		return cout;
 	}
-
-    ~Leaf() override {
-        delete this;
-    }
 };
 
 
 class DecisionNode : public Node {
 private:
 	Question question;
-	Node* true_branch;
-	Node* false_branch;
+	std::shared_ptr<Node> true_branch;
+	std::shared_ptr<Node> false_branch;
 
 public:
-	DecisionNode(const Question& q, Node* tb, Node* fb) :
+	DecisionNode(const Question& q, std::shared_ptr<Node> tb, std::shared_ptr<Node> fb) :
 		question(q),
 		true_branch(tb),
 		false_branch(fb)
@@ -87,12 +79,8 @@ public:
 
 	Question getQuestion() { return  question; }
 
-	Node* getTrueBranch() { return true_branch; }
+	std::shared_ptr<Node> getTrueBranch() { return true_branch; }
 
-	Node* getFalseBranch() { return false_branch; }
-
-    ~DecisionNode() override {
-        delete this;
-    }
+	std::shared_ptr<Node> getFalseBranch() { return false_branch; }
 };
 

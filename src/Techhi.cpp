@@ -7,23 +7,15 @@
 #include "BinaryDecisionTree.h"
 #include "CART.h"
 
+std::vector<std::string> header;
+long long totalDuration;
+Array2D CSVdata = CSV2Vector("D:/Projects/C++/DSA/Techhi/data/anime_traits_refined.csv");
 
-Array2D training_data = {
-	{"Green", "3", "Apple"},
-	{"Yellow", "3", "Apple"},
-	{"Red", "1", "Grape"},
-	{"Red", "1", "Grape"},
-	{"Yellow", "3", "Lemon"},
-	{"Peach", "2", "Peach"}
-};
-
-Array2D CSVdata = CSV2Vector("/Users/macbook/CLionProjects/Jaasus/data/database.csv");
-
-Node* build_tree(const Array2D& rows) {
+std::shared_ptr<Node> build_tree(Array2D& rows) {
 	auto [gain, question] = find_best_split(rows);
 
 	if (gain == 0.0) {
-		return new Leaf(rows);
+		return std::make_shared<Leaf>(rows);
 	}
 
 	auto [true_rows, false_rows] = partition(rows, question);
@@ -31,13 +23,13 @@ Node* build_tree(const Array2D& rows) {
 	auto true_branch = build_tree(true_rows);
 	auto false_branch = build_tree(false_rows);
 
-	return new DecisionNode(question, true_branch, false_branch);
+	return std::make_shared<DecisionNode>(question, true_branch, false_branch);
 }
 
-void print_tree(Node* node, const std::string& spacing = "") {
+void print_tree(const std::shared_ptr<Node>& node, const std::string& spacing = "") {
 	std::string answer;
 
-	auto leaf = dynamic_cast<Leaf*>(node);
+	auto leaf = std::dynamic_pointer_cast<Leaf>(node);
 	if (leaf) {
 		for (const auto& pair : leaf->getPredictions()) {
 			std::cout << "Is it " << pair.first << "? ";
@@ -50,7 +42,7 @@ void print_tree(Node* node, const std::string& spacing = "") {
 		std::cout << "Jaatha Jhuto Bolxas!!!" << std::endl;
 	}
 
-	auto decisionNode = dynamic_cast<DecisionNode*>(node);
+	auto decisionNode = std::dynamic_pointer_cast<DecisionNode>(node);
 	if (decisionNode) {
 		std::cout << spacing << decisionNode->getQuestion();
 		std::cin >> answer;
@@ -66,13 +58,48 @@ void print_tree(Node* node, const std::string& spacing = "") {
 	}
 }
 
+void display_tree(std::shared_ptr<Node> node, const std::string& prefix = "", bool isLeft = false) {
+	auto leaf = std::dynamic_pointer_cast<Leaf>(node);
+	if (leaf) {
+		for (auto& row : leaf->getPredictions()) {
+			std::cout << "{ " << row.first << ", " << row.second << " }\t";
+		}
+		std::cout << std::endl << std::endl;
+	}
+
+	auto decisionNode = std::dynamic_pointer_cast<DecisionNode>(node);
+	if (decisionNode) {
+		std::cout << prefix;
+		std::cout << (isLeft ? "|--" : "+--");
+
+		std::cout << decisionNode->getQuestion() << std::endl;
+
+		display_tree(decisionNode->getTrueBranch(), prefix + (isLeft ? "|   " : "    "), true);
+	
+		display_tree(decisionNode->getFalseBranch(), prefix + (isLeft ? "|   " : "    "), false);
+	}
+}
+
 
 int main()
 {
-
+	std::string answer;
     try {
-	    Node* my_tree = build_tree(CSVdata);
-	    print_tree(my_tree);
+		std::shared_ptr<Node> my_tree;
+		{
+			Timer timer;
+			my_tree = build_tree(CSVdata);
+		}
+
+		display_tree(my_tree);
+
+		/*while (true) {
+			print_tree(my_tree);
+			std::cout << std::endl << "Would you like to play Again? ";
+			std::cin >> answer;
+
+			if ((answer == "No") || (answer == "no") || (answer == "n") || (answer == "N")) break;
+		}*/
     }
     catch (const char& err) {
         std::cout << err;
