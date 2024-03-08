@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "BinaryDecisionTree.h"
 #include "CART.h"
+#include "Codec.h"
 
 std::vector<std::string> header;
 long long totalDuration;
@@ -88,11 +89,16 @@ int main()
 	std::string answer;
     try {
 		std::shared_ptr<Node> my_tree;
-		{
+		/*{
 			Timer timer;
 			my_tree = build_tree(CSVdata);
 		}
-
+		 Codec::writeToFile(my_tree, "serialized_data.txt");*/
+		
+		{
+			Timer timer;
+			my_tree = Codec::readFromFile("serialized_data.txt");
+		}
 		display_tree(my_tree);
 
 		/*while (true) {

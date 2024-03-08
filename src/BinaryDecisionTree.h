@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <algorithm>
 
 #include "utils.h"
 
@@ -13,7 +14,20 @@ private:
 	int column;
 	std::string value;
 public:
-	Question(int col, const std::string& val) : column(col), value(val) {}
+
+	Question(int col, const std::string& val) {
+		column = col;
+		value = val;
+		std::replace(value.begin(), value.end(), ' ', '_');
+	}
+
+	int getColumn() const {
+		return column;
+	}
+
+	std::string getValue() const {
+		return value;
+	}
 
 	bool match(std::vector<std::string> example) const {
 		std::string val = example[column];
@@ -46,6 +60,11 @@ private:
 public:
 	std::unordered_map<std::string, int> getPredictions() {
 		return predictions;
+	}
+
+	// For deserialization of Binary Tree
+	Leaf(const std::unordered_map<std::string, int>& predictions) {
+		this->predictions = predictions;
 	}
 
 	Leaf(const Array2D& rows) {
