@@ -88,8 +88,6 @@ void parallel_nested_loop(Array2D& rows, int n_features, double& best_gain, Ques
 	tbb::parallel_for(range, LoopBody(rows, best_gain, best_question, current_uncertainty));
 }
 
-
-
 std::pair<double, Question> find_best_split(Array2D& rows) {
 	double best_gain = 0.0;
 	Question best_question(0, "");

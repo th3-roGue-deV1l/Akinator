@@ -18,6 +18,11 @@ public:
 	bool match(std::vector<std::string> example) const {
 		std::string val = example[column];
 
+		/*if ((val == value) || (std::find(similar_characters->begin(), similar_characters->end(), example.back())) != similar_characters->end())
+		{
+			similar_characters->push_back(example.back());
+			return true;
+		}*/
 		return val == value;
 	}
 

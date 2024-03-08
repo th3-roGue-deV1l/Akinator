@@ -5,7 +5,6 @@
 
 #include <algorithm>
 #include <execution>
-#include <omp.h>
 #include <tbb/tbb.h>
 
 std::pair<Array2D, Array2D> partition(const Array2D& rows, const Question& question);

@@ -1,0 +1,7 @@
+Color,Diam,Tasty,Label
+Green,3,nottasty,Apple
+Yellow,3,tasty,Apple
+Red,1,notTasty,Grape
+Red,1,tasty,Grape
+Yellow,3,notTasty,Lemon
+Green,3,tasty,Peach
