@@ -86,35 +86,18 @@ void display_tree(std::shared_ptr<Node> node, const std::string& prefix = "", bo
 
 int main()
 {
-	std::string answer;
     try {
-		std::shared_ptr<Node> my_tree;
-		/*{
-			Timer timer;
-			my_tree = build_tree(CSVdata);
-		}
-		 Codec::writeToFile(my_tree, "serialized_data.txt");*/
-		
-		{
-			Timer timer;
-			my_tree = Codec::readFromFile("serialized_data.txt");
-		}
-		display_tree(my_tree);
-
-		/*while (true) {
-			print_tree(my_tree);
-			std::cout << std::endl << "Would you like to play Again? ";
-			std::cin >> answer;
-
-			if ((answer == "No") || (answer == "no") || (answer == "n") || (answer == "N")) break;
-		}*/
+		    std::shared_ptr<Node> my_tree;
+		    {
+		    	Timer timer;
+		    	my_tree = build_tree(CSVdata);
+		    }
+		    Codec::writeToFile(my_tree, "serialized_data.txt");
     }
     catch (const char& err) {
-        std::cout << err;
+        std::cerr << err;
     }
 
 	std::getchar();
-	std::getchar();
-
 	return 0;
 }
