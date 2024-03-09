@@ -10,7 +10,7 @@
 
   <body class="px-10 h-screen flex items-center justify-center" onload="play()">
     <div
-      class="relative bg-white rounded-2xl shadow-lg w-3/5 h-2/3 flex flex-col items-center"
+      class="relative bg-white rounded-2xl shadow-lg w-3/5 h-3/4 flex flex-col items-center"
     >
       <a href="/index.html">
         <div
@@ -38,7 +38,10 @@
         alt="Akinator Avatar"
         class="w-36 h-36 object-contain animate-smooth_bounce"
       />
-      <h1 id="question" class="mt-4 text-3xl tracking-wide font-bold font-sans"></h1>
+      <h1
+        id="question"
+        class="mt-4 text-3xl tracking-wide font-bold font-sans"
+      ></h1>
       <div class="block h-20"></div>
       <div class="grid grid-rows-1 grid-cols-2 gap-40">
         <button
@@ -54,9 +57,31 @@
           No
         </button>
       </div>
+      <img id="pfp" src="" class="hidden h-48 w-48 object-contain mb-4 rounded-md"/>
+      <button
+        class="hidden px-8 py-3 bg-[#6a0dad] rounded-sm shadow-md text-white text-xl font-medium tracking-wider hover:-translate-y-1.5 transform transition duration-300 ease-in-out hover:bg-opacity-90"
+        id="playButton"
+      >
+        Play Again
+      </button>
     </div>
 
     <script type="text/javascript">
+      function resetGame(characterName) {
+        //hide yes button and no button
+        document.getElementById("yesButton").style.display = "none";
+        document.getElementById("noButton").style.display = "none";
+        document.getElementById("playButton").style.display = "block";
+
+        characterName = characterName.replace(/_/g, " ");
+        fetch(`https://api.jikan.moe/v4/characters?q=${characterName}&order_by=favorites&sort=desc`)
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("pfp").style.display = "block";
+            document.getElementById("pfp").src = data.data[0].images.jpg.image_url;
+          });
+      }
+
       function play() {
         Module.ccall("startGame", null, null, null);
       }
@@ -85,6 +110,12 @@
         .getElementById("noButton")
         .addEventListener("click", function () {
           handleUserInput("n");
+        });
+
+      document
+        .getElementById("playButton")
+        .addEventListener("click", function () {
+          window.location.href = "/index.html";
         });
     </script>
   </body>

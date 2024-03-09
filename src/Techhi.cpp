@@ -93,6 +93,8 @@ int main()
 		    	my_tree = build_tree(CSVdata);
 		    }
 		    Codec::writeToFile(my_tree, "D:/Projects/C++/DSA/Techhi/web/serialized_data.txt");
+
+			display_tree(my_tree);
     }
     catch (const char& err) {
         std::cerr << err;

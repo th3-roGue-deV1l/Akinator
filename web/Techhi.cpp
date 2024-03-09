@@ -253,6 +253,9 @@ private:
 };
 
 std::shared_ptr<Node> currentNode;
+std::shared_ptr<Node> trueNode;
+std::shared_ptr<Node> falseNode;
+
 
 void updateQuestion(const char *question)
 {
@@ -297,6 +300,21 @@ extern "C"
     {
       play(decisionNode->getTrueBranch());
     }
+
+    auto leaf = std::dynamic_pointer_cast<Leaf>(currentNode);
+    if (leaf)
+    {
+      std::string character_name = leaf->getPredictions().begin()->first;
+      std::string result = "The character is " + character_name;
+      updateQuestion(result.c_str());
+
+      // Reset the game
+      EM_ASM({
+        var characterName = UTF8ToString($0);
+        resetGame(characterName);
+      },
+             character_name.c_str());
+    }
   }
 
   void EMSCRIPTEN_KEEPALIVE handleUserNoInputFromJS()
@@ -305,6 +323,13 @@ extern "C"
     if (decisionNode)
     {
       play(decisionNode->getFalseBranch());
+    }
+
+    auto leaf = std::dynamic_pointer_cast<Leaf>(currentNode);
+    if (leaf)
+    {
+      currentNode = falseNode;
+      play(currentNode);
     }
   }
 }
