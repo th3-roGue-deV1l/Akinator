@@ -16,7 +16,7 @@ var Module = typeof Module != 'undefined' ? Module : {};
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
-// include: C:\Users\USER\AppData\Local\Temp\tmptravum_w.js
+// include: C:\Users\USER\AppData\Local\Temp\tmpr2lf6eo6.js
 
   if (!Module.expectedDataFileDownloads) {
     Module.expectedDataFileDownloads = 0;
@@ -35,8 +35,8 @@ var Module = typeof Module != 'undefined' ? Module : {};
         // web worker
         PACKAGE_PATH = encodeURIComponent(location.pathname.toString().substring(0, location.pathname.toString().lastIndexOf('/')) + '/');
       }
-      var PACKAGE_NAME = 'hello.data';
-      var REMOTE_PACKAGE_BASE = 'hello.data';
+      var PACKAGE_NAME = 'Techhi.data';
+      var REMOTE_PACKAGE_BASE = 'Techhi.data';
       if (typeof Module['locateFilePackage'] === 'function' && !Module['locateFile']) {
         Module['locateFile'] = Module['locateFilePackage'];
         err('warning: you defined Module.locateFilePackage, that has been renamed to Module.locateFile (using your locateFilePackage for now)');
@@ -166,10 +166,10 @@ var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
           var files = metadata['files'];
           for (var i = 0; i < files.length; ++i) {
             DataRequest.prototype.requests[files[i].filename].onload();
-          }          Module['removeRunDependency']('datafile_hello.data');
+          }          Module['removeRunDependency']('datafile_Techhi.data');
 
       };
-      Module['addRunDependency']('datafile_hello.data');
+      Module['addRunDependency']('datafile_Techhi.data');
 
       if (!Module.preloadResults) Module.preloadResults = {};
 
@@ -194,21 +194,21 @@ var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
 
   })();
 
-// end include: C:\Users\USER\AppData\Local\Temp\tmptravum_w.js
-// include: C:\Users\USER\AppData\Local\Temp\tmpmihl5i76.js
+// end include: C:\Users\USER\AppData\Local\Temp\tmpr2lf6eo6.js
+// include: C:\Users\USER\AppData\Local\Temp\tmpju6rumt7.js
 
     // All the pre-js content up to here must remain later on, we need to run
     // it.
     if (Module['ENVIRONMENT_IS_PTHREAD'] || Module['$ww']) Module['preRun'] = [];
     var necessaryPreJSTasks = Module['preRun'].slice();
-  // end include: C:\Users\USER\AppData\Local\Temp\tmpmihl5i76.js
-// include: C:\Users\USER\AppData\Local\Temp\tmp9cphhp7n.js
+  // end include: C:\Users\USER\AppData\Local\Temp\tmpju6rumt7.js
+// include: C:\Users\USER\AppData\Local\Temp\tmp2ivb2nso.js
 
     if (!Module['preRun']) throw 'Module.preRun should exist because file support used it; did a pre-js delete it?';
     necessaryPreJSTasks.forEach(function(task) {
       if (Module['preRun'].indexOf(task) < 0) throw 'All preRun tasks that exist before user pre-js code should remain after; did you replace Module or modify Module.preRun?';
     });
-  // end include: C:\Users\USER\AppData\Local\Temp\tmp9cphhp7n.js
+  // end include: C:\Users\USER\AppData\Local\Temp\tmp2ivb2nso.js
 
 
 // Sometimes an existing Module object exists with properties
@@ -914,7 +914,7 @@ function createExportWrapper(name) {
 // include: runtime_exceptions.js
 // end include: runtime_exceptions.js
 var wasmBinaryFile;
-  wasmBinaryFile = 'hello.wasm';
+  wasmBinaryFile = 'Techhi.wasm';
   if (!isDataURI(wasmBinaryFile)) {
     wasmBinaryFile = locateFile(wasmBinaryFile);
   }

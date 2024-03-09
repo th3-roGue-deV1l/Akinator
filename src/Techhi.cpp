@@ -92,7 +92,7 @@ int main()
 		    	Timer timer;
 		    	my_tree = build_tree(CSVdata);
 		    }
-		    Codec::writeToFile(my_tree, "serialized_data.txt");
+		    Codec::writeToFile(my_tree, "D:/Projects/C++/DSA/Techhi/web/serialized_data.txt");
     }
     catch (const char& err) {
         std::cerr << err;
