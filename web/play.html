@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-[url('./endless-constellation.svg')]">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Play - Techhi</title>
+    <script async type="text/javascript" src="hello.js"></script>
+    <script type="module" src="main.js" defer></script>
+  </head>
+
+  <body class="px-10 h-screen flex items-center justify-center" onload="play()">
+    <div
+      class="relative bg-white rounded-2xl shadow-lg w-3/5 h-2/3 flex flex-col items-center"
+    >
+      <a href="/index.html">
+        <div
+          class="absolute rounded-full left-5 top-5 p-2 bg-white transition-colors duration-500 ease-in-out hover:bg-violet-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="cursor-pointer hover:scale-110 transform transition duration-300 ease-in-out"
+          >
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+          </svg>
+        </div>
+      </a>
+      <img
+        src="https://akinator.netlify.app/_nuxt/img/logo2.891763f.png"
+        alt="Akinator Avatar"
+        class="w-36 h-36 object-contain animate-smooth_bounce"
+      />
+      <h1 id="question" class="mt-4 text-3xl tracking-wide font-bold font-sans"></h1>
+      <div class="block h-20"></div>
+      <div class="grid grid-rows-1 grid-cols-2 gap-40">
+        <button
+          class="px-8 py-3 bg-[#8a2be2] rounded-sm shadow-md text-white text-xl font-medium tracking-wider hover:-translate-y-1.5 transform transition duration-300 ease-in-out hover:bg-opacity-90"
+          id="yesButton"
+        >
+          Yes
+        </button>
+        <button
+          class="px-8 py-3 bg-[#6a0dad] rounded-sm shadow-md text-white text-xl font-medium tracking-wider hover:-translate-y-1.5 transform transition duration-300 ease-in-out hover:bg-opacity-90"
+          id="noButton"
+        >
+          No
+        </button>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      function play() {
+        Module.ccall("startGame", null, null, null);
+      }
+      // Define the function to update the question in the DOM
+      function updateQuestion(question) {
+        document.getElementById("question").innerText = question;
+      }
+
+      // Define the function to handle user input
+      function handleUserInput(answer) {
+        if (answer === "y") {
+          Module.ccall("handleUserYesInputFromJS", null, null, null);
+        } else {
+          Module.ccall("handleUserNoInputFromJS", null, null, null);
+        }
+      }
+
+      // Attach event listeners to the Yes and No buttons
+      document
+        .getElementById("yesButton")
+        .addEventListener("click", function () {
+          handleUserInput("y");
+        });
+
+      document
+        .getElementById("noButton")
+        .addEventListener("click", function () {
+          handleUserInput("n");
+        });
+    </script>
+  </body>
+</html>
